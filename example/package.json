@@ -1,0 +1,35 @@
+{
+  "name": "@pnnl/react-bootstrap-buildingid-example",
+  "homepage": ".",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
+    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
+    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+  },
+  "dependencies": {
+    "@pnnl/react-bootstrap-buildingid": "link:..",
+    "@pnnl/react-bingmaps": "link:../node_modules/@pnnl/react-bingmaps",
+    "bootstrap": "link:../node_modules/bootstrap",
+    "open-location-code": "link:../node_modules/open-location-code",
+    "pnnl-buildingid": "link:../node_modules/pnnl-buildingid",
+    "react": "link:../node_modules/react",
+    "react-bootstrap": "link:../node_modules/react-bootstrap",
+    "react-dom": "link:../node_modules/react-dom",
+    "react-scripts": "link:../node_modules/react-scripts"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
