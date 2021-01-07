@@ -451,7 +451,7 @@ CodeFormGroup.defaultProps = {
   code: '',
   disabled: false,
   editing: false,
-  label: undefined,
+  label: 'Unique Building Identifier (UBID)',
   lockedCode: undefined,
   latitude: '',
   longitude: '',
