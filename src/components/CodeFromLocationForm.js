@@ -25,7 +25,7 @@ const CodeFromLocationForm = ({
   onLongitudeChange,
   onCodeChange,
 }) => {
-  const [geolocationButtonDisabled, setGeolocationButtonDisabled] = React.useState(disabled);
+  const [geolocationButtonDisabled, setGeolocationButtonDisabled] = React.useState(disabled || !(window.navigator && window.navigator.geolocation));
 
   const code = React.useMemo(() => {
     const _latitude = parseFloat(latitude);
@@ -71,8 +71,6 @@ const CodeFromLocationForm = ({
       setGeolocationButtonDisabled(true);
 
       window.navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position);
-
         handleLatitudeChange({
           target: {
             value: position.coords.latitude,
