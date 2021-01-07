@@ -11,9 +11,9 @@ import {
 } from 'react-bootstrap'
 
 const App = () => {
-  const [code, setCode] = React.useState('849VQJH6+95J-51-58-42-50');
+  const [code, setCode] = React.useState('');
   const [editing, setEditing] = React.useState(false);
-  const [history, setHistory] = React.useState(['849VQJH6+95J-51-58-42-50']);
+  const [history, setHistory] = React.useState([]);
   const [latitude, setLatitude] = React.useState('');
   const [lockedCode, setLockedCode] = React.useState(undefined);
   const [longitude, setLongitude] = React.useState('');
