@@ -2,6 +2,8 @@ import './index.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import '@pnnl/react-bootstrap-buildingid/dist/index.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'

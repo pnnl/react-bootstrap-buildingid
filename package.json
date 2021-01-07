@@ -51,7 +51,7 @@
     "dist"
   ],
   "dependencies": {
-    "@pnnl/react-bingmaps": "https://github.com/pnnl/react-bingmaps.git",
+    "@pnnl/react-bingmaps": "https://github.com/pnnl/react-bingmaps.git#f06009e19915e15e50479aa12a6d55adecfde37e",
     "bootstrap": "^4.5.3",
     "open-location-code": "^1.0.3",
     "pnnl-buildingid": "^1.0.3",

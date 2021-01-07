@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import UniqueBuildingIdentification from 'pnnl-buildingid'
 
-import CodeAreaMapControl from './CodeAreaMapControl';
+import CodeAreaMapControl from './CodeAreaMapControl'
 
 const CodeMapControl = ({
   code,
-  onChange,
+  onCodeChange,
   ...props
 }) => {
   const codeArea = React.useMemo(() => {
@@ -20,23 +20,23 @@ const CodeMapControl = ({
     code,
   ]);
 
-  const handleChange = (_codeArea, _code) => {
-    onChange && onChange(_code, _codeArea);
+  const handleCodeAreaChange = (_codeArea, _code) => {
+    onCodeChange && onCodeChange(_code, _codeArea);
   };
 
   return (
-    <CodeAreaMapControl codeArea={codeArea} onChange={handleChange} {...props} />
+    <CodeAreaMapControl codeArea={codeArea} onCodeAreaChange={handleCodeAreaChange} {...props} />
   );
 }
 
 CodeMapControl.propTypes = {
   code: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onCodeChange: PropTypes.func.isRequired,
 }
 
 CodeMapControl.defaultProps = {
   code: undefined,
-  onChange: undefined,
+  onCodeChange: undefined,
 }
 
 export default CodeMapControl

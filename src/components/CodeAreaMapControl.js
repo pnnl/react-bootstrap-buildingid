@@ -5,13 +5,14 @@ import UniqueBuildingIdentification from 'pnnl-buildingid'
 
 import Microsoft from '@pnnl/react-bingmaps'
 
-import CodeAreaShape from './CodeAreaShape';
+import CodeAreaShape from './CodeAreaShape'
 
 const CodeAreaMapControl = ({
   codeArea,
-  isEditing,
-  onChange,
-  onEditChange,
+  disabled,
+  editing,
+  onCodeAreaChange,
+  onEditingChange,
   ...props
 }) => {
   const codeAreaBounds = React.useMemo(() => {
@@ -69,7 +70,7 @@ const CodeAreaMapControl = ({
   const api = React.useContext(Microsoft.Maps.ApiContext);
 
   const handleDrawingModeChanged = (drawingMode) => {
-    if (isEditing) {
+    if (editing) {
       if (codeArea && ref.current) {
         ref.current.finish((shape) => {
           if (api && api && api.Maps && api.Maps.SpatialMath && api.Maps.SpatialMath.Geometry) {
@@ -84,16 +85,16 @@ const CodeAreaMapControl = ({
 
             const _codeArea = UniqueBuildingIdentification.v3.decode(code);
 
-            onChange && onChange(_codeArea, code);
+            onCodeAreaChange && onCodeAreaChange(_codeArea, code);
 
-            onEditChange && onEditChange(false);
+            onEditingChange && onEditingChange(false);
           }
         });
       } else {
-        onEditChange && onEditChange(false);
+        onEditingChange && onEditingChange(false);
       }
     } else {
-      onEditChange && onEditChange(true);
+      onEditingChange && onEditingChange(true);
     }
   };
 
@@ -107,7 +108,7 @@ const CodeAreaMapControl = ({
       mapTypeId="aerial"
       showLocateMeButton={false}
     >
-      <Microsoft.Maps.Layer visible={!isEditing}>
+      <Microsoft.Maps.Layer visible={!editing}>
         {
           codeArea ? (
             <CodeAreaShape codeArea={codeArea} {...props} />
@@ -115,9 +116,9 @@ const CodeAreaMapControl = ({
         }
       </Microsoft.Maps.Layer>
       <Microsoft.Maps.DrawingTools.DrawingTools ref={ref}>
-        <Microsoft.Maps.DrawingTools.DrawingManager drawingBarActions={['edit']} drawingBarVisible={!!codeArea} drawingMode={isEditing ? 'edit' : 'none'} onDrawingModeChanged={handleDrawingModeChanged}>
+        <Microsoft.Maps.DrawingTools.DrawingManager drawingBarActions={['edit']} drawingBarVisible={!disabled && !!codeArea} drawingMode={editing ? 'edit' : 'none'} onDrawingModeChanged={handleDrawingModeChanged}>
           {
-            (codeArea && isEditing) ? (
+            (codeArea && !disabled && editing) ? (
               <Microsoft.Maps.Polygon editable={true} rings={codeAreaRings} {...props} />
             ) : null
           }
@@ -129,16 +130,18 @@ const CodeAreaMapControl = ({
 
 CodeAreaMapControl.propTypes = {
   codeArea: PropTypes.instanceOf(UniqueBuildingIdentification.CodeArea),
-  isEditing: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onEditChange: PropTypes.func,
+  disabled: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
+  onCodeAreaChange: PropTypes.func.isRequired,
+  onEditingChange: PropTypes.func,
 }
 
 CodeAreaMapControl.defaultProps = {
   codeArea: undefined,
-  isEditing: false,
-  onChange: undefined,
-  onEditChange: undefined,
+  disabled: false,
+  editing: false,
+  onCodeAreaChange: undefined,
+  onEditingChange: undefined,
 }
 
 export default CodeAreaMapControl
