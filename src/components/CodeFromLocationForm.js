@@ -88,7 +88,7 @@ const CodeFromLocationForm = ({
     }
 
     return false;
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
