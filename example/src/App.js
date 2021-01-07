@@ -13,8 +13,9 @@ import {
 const App = () => {
   const [code, setCode] = React.useState('849VQJH6+95J-51-58-42-50');
   const [editing, setEditing] = React.useState(false);
+  const [history, setHistory] = React.useState(['849VQJH6+95J-51-58-42-50']);
   const [latitude, setLatitude] = React.useState('');
-  const [lockedCode, setLockedCode] = React.useState(null);
+  const [lockedCode, setLockedCode] = React.useState(undefined);
   const [longitude, setLongitude] = React.useState('');
   const [modalLeftPanelVisible, setModalLeftPanelVisible] = React.useState(false);
   const [modalRightPanelVisible, setModalRightPanelVisible] = React.useState(false);
@@ -29,6 +30,7 @@ const App = () => {
         <CodeFormGroup
           code={code}
           editing={editing}
+          history={history}
           latitude={latitude}
           lockedCode={lockedCode}
           longitude={longitude}
@@ -41,6 +43,7 @@ const App = () => {
           onCodeChange={setCode}
           onCodeLengthChange={setPlaceholderCodeLength}
           onEditingChange={setEditing}
+          onHistoryChange={setHistory}
           onLatitudeChange={setLatitude}
           onLockedCodeChange={setLockedCode}
           onLongitudeChange={setLongitude}

@@ -109,6 +109,7 @@ const CodeFormGroup = ({
   code,
   disabled,
   editing,
+  history,
   label,
   latitude,
   lockedCode,
@@ -123,6 +124,7 @@ const CodeFormGroup = ({
   onCodeChange,
   onCodeLengthChange,
   onEditingChange,
+  onHistoryChange,
   onLatitudeChange,
   onLockedCodeChange,
   onLongitudeChange,
@@ -163,6 +165,17 @@ const CodeFormGroup = ({
     lockedCode,
   ]);
 
+  const handleCodeChange = (_code) => {
+    onCodeChange && onCodeChange(_code);
+
+    if (UniqueBuildingIdentification.v3.isValid(_code)) {
+      onHistoryChange && onHistoryChange([
+        ...history,
+        _code,
+      ]);
+    }
+  };
+
   const handleCodeLengthChange = (codeLength) => {
     const _codeArea = lockedCodeArea ? lockedCodeArea : codeArea;
 
@@ -170,11 +183,41 @@ const CodeFormGroup = ({
       try {
         const _code = UniqueBuildingIdentification.v3.encode(_codeArea.latitudeLo, _codeArea.longitudeLo, _codeArea.latitudeHi, _codeArea.longitudeHi, _codeArea.centerOfMass.latitudeCenter, _codeArea.centerOfMass.longitudeCenter, codeLength);
 
-        onCodeChange && onCodeChange(_code);
+        handleCodeChange(_code);
       } catch {}
     }
 
     onCodeLengthChange && onCodeLengthChange(codeLength);
+  };
+
+  const handleRestoreLockedCodeLinkClick = (event) => {
+    event.preventDefault();
+
+    handleCodeChange(lockedCode);
+
+    onLockedCodeChange && onLockedCodeChange(undefined);
+
+    return false;
+  };
+
+  const handleRestoreHistoryLinkClick = (event) => {
+    event.preventDefault();
+
+    if (Array.isArray(history)) {
+      if (UniqueBuildingIdentification.v3.isValid(code)) {
+        if (history.length > 1) {
+          onCodeChange && onCodeChange(history[history.length - 2]);
+
+          onHistoryChange && onHistoryChange(history.slice(0, history.length - 1));
+        }
+      } else {
+        if (history.length > 0) {
+          onCodeChange && onCodeChange(history[history.length - 1]);
+        }
+      }
+    }
+
+    return false;
   };
 
   const handleLockButtonClick = (event) => {
@@ -268,7 +311,7 @@ const CodeFormGroup = ({
             code={code}
             disabled={disabled || editing || !!lockedCodeArea}
             placeholderCodeLength={placeholderCodeLength}
-            onCodeChange={onCodeChange}
+            onCodeChange={handleCodeChange}
           />
           <InputGroup.Append>
             <CodeLengthFormControl
@@ -295,6 +338,20 @@ const CodeFormGroup = ({
             </Button>
           </InputGroup.Append>
         </InputGroup>
+        {
+          lockedCodeArea && (code !== lockedCode) ? (
+            <Form.Text className="text-muted">
+              <span>Restore locked value:</span> <a href="/" onClick={handleRestoreLockedCodeLinkClick}>{lockedCode}</a>
+            </Form.Text>
+          ) : null
+        }
+        {
+          (Array.isArray(history) && (UniqueBuildingIdentification.v3.isValid(code) ? ((history.length > 1) && (code !== history[history.length - 2])) : ((history.length > 0) && (code !== history[history.length - 1])))) ? (
+            <Form.Text className="text-muted">
+              <span>Restore previous value:</span> <a href="/" onClick={handleRestoreHistoryLinkClick}>{history[history.length - (UniqueBuildingIdentification.v3.isValid(code) ? 2 : 1)]}</a>
+            </Form.Text>
+          ) : null
+        }
       </Form.Group>
       <Modal animation={false} size={modalLeftPanelVisible ? (modalRightPanelVisible ? 'xl' : 'lg') : (modalRightPanelVisible ? 'lg' : null)} show={modalVisible} onHide={handleModalHideButtonClick}>
         <Modal.Header closeButton>
@@ -313,7 +370,7 @@ const CodeFormGroup = ({
                       longitude={longitude}
                       query={query}
                       wkt={wkt}
-                      onCodeChange={onCodeChange}
+                      onCodeChange={handleCodeChange}
                       onLatitudeChange={onLatitudeChange}
                       onLongitudeChange={onLongitudeChange}
                       onQueryChange={onQueryChange}
@@ -331,7 +388,7 @@ const CodeFormGroup = ({
                     code={code}
                     disabled={disabled || !!lockedCodeArea}
                     editing={editing}
-                    onCodeChange={onCodeChange}
+                    onCodeChange={handleCodeChange}
                     onEditingChange={onEditingChange}
                   />
                 </div>
@@ -359,7 +416,7 @@ const CodeFormGroup = ({
                     code={code}
                     disabled={disabled || editing || !!lockedCodeArea}
                     placeholderCodeLength={placeholderCodeLength}
-                    onCodeChange={onCodeChange}
+                    onCodeChange={handleCodeChange}
                   />
                   <InputGroup.Append>
                     <CodeLengthFormControl
@@ -403,6 +460,20 @@ const CodeFormGroup = ({
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
+                {
+                  lockedCodeArea && (code !== lockedCode) ? (
+                    <Form.Text className="text-muted">
+                      <span>Restore locked value:</span> <a href="/" onClick={handleRestoreLockedCodeLinkClick}>{lockedCode}</a>
+                    </Form.Text>
+                  ) : null
+                }
+                {
+                  (Array.isArray(history) && (UniqueBuildingIdentification.v3.isValid(code) ? ((history.length > 1) && (code !== history[history.length - 2])) : ((history.length > 0) && (code !== history[history.length - 1])))) ? (
+                    <Form.Text className="text-muted">
+                      <span>Restore previous value:</span> <a href="/" onClick={handleRestoreHistoryLinkClick}>{history[history.length - (UniqueBuildingIdentification.v3.isValid(code) ? 2 : 1)]}</a>
+                    </Form.Text>
+                  ) : null
+                }
               </Form.Group>
             </div>
           </div>
@@ -421,6 +492,7 @@ CodeFormGroup.propTypes = {
   code: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
+  history: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   label: PropTypes.string,
   latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   lockedCode: PropTypes.string,
@@ -435,6 +507,7 @@ CodeFormGroup.propTypes = {
   onCodeChange: PropTypes.func.isRequired,
   onEditingChange: PropTypes.func.isRequired,
   onCodeLengthChange: PropTypes.func.isRequired,
+  onHistoryChange: PropTypes.func.isRequired,
   onLatitudeChange: PropTypes.func.isRequired,
   onLongitudeChange: PropTypes.func.isRequired,
   onModalLeftPanelHide: PropTypes.func.isRequired,
@@ -451,6 +524,7 @@ CodeFormGroup.defaultProps = {
   code: '',
   disabled: false,
   editing: false,
+  history: [],
   label: 'Unique Building Identifier (UBID)',
   lockedCode: undefined,
   latitude: '',
@@ -464,6 +538,7 @@ CodeFormGroup.defaultProps = {
   wkt: '',
   onCodeChange: undefined,
   onEditingChange: undefined,
+  onHistoryChange: undefined,
   onCodeLengthChange: undefined,
   onLatitudeChange: undefined,
   onLongitudeChange: undefined,
