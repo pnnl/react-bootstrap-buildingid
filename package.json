@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "React components for Unique Building Identification (UBID)",
   "author": "markborkum",
-  "license": "See LICENSE in LICENSE.txt",
+  "license": "SEE LICENSE IN LICENSE.txt",
   "repository": "pnnl/react-bootstrap-buildingid",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
