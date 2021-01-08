@@ -3,7 +3,6 @@ import ChevronDoubleRight from './ChevronDoubleRight'
 import Geo from './Geo'
 import Lock from './Lock'
 import Map from './Map'
-import Plus from './Plus'
 import Unlock from './Unlock'
 
 const Icon = {
@@ -12,7 +11,6 @@ const Icon = {
   Geo,
   Lock,
   Map,
-  Plus,
   Unlock,
 }
 
