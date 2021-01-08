@@ -71,7 +71,7 @@ const CodeFromWellKnownTextForm = ({
               <Form.Text>{errorMessages.invalid}</Form.Text>
             ) : (
               (shapes.length > 1) ? (
-                <Form.Text>{errorMessages.length.replace("{length}", shapes.length)}</Form.Text>
+                <Form.Text>{errorMessages.length.replace('{length}', shapes.length)}</Form.Text>
               ) : null
             )
           ) : null

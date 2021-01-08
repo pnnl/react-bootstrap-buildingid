@@ -14,9 +14,9 @@ function getClassName(code) {
     if (code.length === 0) {
       return null;
     } else if (UniqueBuildingIdentification.v3.isValid(code)) {
-      return "is-valid";
+      return 'is-valid';
     } else {
-      return "is-invalid";
+      return 'is-invalid';
     }
   } else {
     return null;
@@ -25,7 +25,7 @@ function getClassName(code) {
 
 function getPlaceholder(codeLength) {
   if (codeLength && (codeLength >= 0) && ((codeLength > 10) || ((codeLength % 2) === 0))) {
-    return `${"0".repeat(Math.min(codeLength, 8))}${"0".repeat(Math.max(8 - codeLength, 0))}+${"0".repeat(Math.max(codeLength - 8, 0))}-0-0-0-0`;
+    return `${'0'.repeat(Math.min(codeLength, 8))}${'0'.repeat(Math.max(8 - codeLength, 0))}+${'0'.repeat(Math.max(codeLength - 8, 0))}-0-0-0-0`;
   } else {
     return null;
   }
