@@ -177,11 +177,19 @@ const CodeFormGroup = ({
   };
 
   const handleCodeLengthChange = (codeLength) => {
-    const _codeArea = lockedCodeArea ? lockedCodeArea : codeArea;
+    if (lockedCodeArea) {
+      if (lockedCodeArea.centerOfMass.codeLength === codeLength) {
+        handleCodeChange(lockedCode);
+      } else {
+        try {
+          const _code = UniqueBuildingIdentification.v3.encode(lockedCodeArea.latitudeLo, lockedCodeArea.longitudeLo, lockedCodeArea.latitudeHi, lockedCodeArea.longitudeHi, lockedCodeArea.centerOfMass.latitudeCenter, lockedCodeArea.centerOfMass.longitudeCenter, codeLength);
 
-    if (_codeArea) {
+          handleCodeChange(_code);
+        } catch {}
+      }
+    } else if (codeArea) {
       try {
-        const _code = UniqueBuildingIdentification.v3.encode(_codeArea.latitudeLo, _codeArea.longitudeLo, _codeArea.latitudeHi, _codeArea.longitudeHi, _codeArea.centerOfMass.latitudeCenter, _codeArea.centerOfMass.longitudeCenter, codeLength);
+        const _code = UniqueBuildingIdentification.v3.encode(codeArea.latitudeLo, codeArea.longitudeLo, codeArea.latitudeHi, codeArea.longitudeHi, codeArea.centerOfMass.latitudeCenter, codeArea.centerOfMass.longitudeCenter, codeLength);
 
         handleCodeChange(_code);
       } catch {}
