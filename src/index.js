@@ -10,6 +10,8 @@ import CodeLengthFormControl from './components/CodeLengthFormControl'
 import CodeMapControl from './components/CodeMapControl'
 import CodeShape from './components/CodeShape'
 
+import useCodeArea from './hooks-custom/useCodeArea'
+
 export {
   CodeAreaMapControl,
   CodeAreaShape,
@@ -22,4 +24,5 @@ export {
   CodeLengthFormControl,
   CodeMapControl,
   CodeShape,
+  useCodeArea,
 }

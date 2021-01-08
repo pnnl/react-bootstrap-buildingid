@@ -60,7 +60,9 @@ const CodeAutosuggestForm = ({
       const code = UniqueBuildingIdentification.v3.encode(latitude, longitude, latitude, longitude, latitude, longitude, codeLength);
 
       onCodeChange && onCodeChange(code);
-    } catch {}
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   const handleSuggestionItemSelected = (selectedSuggestion) => {

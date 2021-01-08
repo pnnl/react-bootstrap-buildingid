@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import UniqueBuildingIdentification from 'pnnl-buildingid'
-
 import Microsoft from '@pnnl/react-bingmaps'
+
+import useCodeArea from '../hooks-custom/useCodeArea'
 
 const AreaEquation = ({
   area,
@@ -195,15 +195,7 @@ LocationRectDescriptionList.defaultProps = {
 const CodeDescription = ({
   code,
 }) => {
-  const codeArea = React.useMemo(() => {
-    try {
-      return UniqueBuildingIdentification.v3.decode(code);
-    } catch {
-      return undefined;
-    }
-  }, [
-    code,
-  ]);
+  const codeArea = useCodeArea(code);
 
   if (codeArea) {
     const codeSubstrings = code.split("-");

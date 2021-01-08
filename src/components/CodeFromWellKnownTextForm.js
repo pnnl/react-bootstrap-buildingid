@@ -33,7 +33,9 @@ const CodeFromWellKnownTextForm = ({
 
       try {
         return UniqueBuildingIdentification.v3.encode(southeast.latitude, northwest.longitude, northwest.latitude, southeast.longitude, centroid.latitude, centroid.longitude, codeLength);
-      } catch {
+      } catch (ex) {
+        console.log(ex);
+
         return undefined;
       }
     } else {

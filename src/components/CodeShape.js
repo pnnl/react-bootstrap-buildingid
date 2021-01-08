@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import UniqueBuildingIdentification from 'pnnl-buildingid'
-
 import CodeAreaShape from './CodeAreaShape'
 
 import useCodeArea from '../hooks-custom/useCodeArea'

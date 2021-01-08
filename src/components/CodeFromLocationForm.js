@@ -36,7 +36,9 @@ const CodeFromLocationForm = ({
     } else {
       try {
         return UniqueBuildingIdentification.v3.encode(_latitude, _longitude, _latitude, _longitude, _latitude, _longitude, codeLength);
-      } catch {
+      } catch (ex) {
+        console.log(ex);
+
         return undefined;
       }
     }

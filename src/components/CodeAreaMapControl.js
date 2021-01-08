@@ -81,13 +81,17 @@ const CodeAreaMapControl = ({
             const southeast = bounds.getSoutheast();
             const northwest = bounds.getNorthwest();
 
-            const code = UniqueBuildingIdentification.v3.encode(southeast.latitude, northwest.longitude, northwest.latitude, southeast.longitude, centroid.latitude, centroid.longitude, codeArea.centerOfMass.codeLength);
+            try {
+              const code = UniqueBuildingIdentification.v3.encode(southeast.latitude, northwest.longitude, northwest.latitude, southeast.longitude, centroid.latitude, centroid.longitude, codeArea.centerOfMass.codeLength);
 
-            const _codeArea = UniqueBuildingIdentification.v3.decode(code);
+              const _codeArea = UniqueBuildingIdentification.v3.decode(code);
 
-            onCodeAreaChange && onCodeAreaChange(_codeArea, code);
+              onCodeAreaChange && onCodeAreaChange(_codeArea, code);
 
-            onEditingChange && onEditingChange(false);
+              onEditingChange && onEditingChange(false);
+            } catch (ex) {
+              console.log(ex);
+            }
           }
         });
       } else {

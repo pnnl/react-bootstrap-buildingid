@@ -170,14 +170,18 @@ const CodeFormGroup = ({
           const _code = UniqueBuildingIdentification.v3.encode(lockedCodeArea.latitudeLo, lockedCodeArea.longitudeLo, lockedCodeArea.latitudeHi, lockedCodeArea.longitudeHi, lockedCodeArea.centerOfMass.latitudeCenter, lockedCodeArea.centerOfMass.longitudeCenter, codeLength);
 
           handleCodeChange(_code);
-        } catch {}
+        } catch (ex) {
+          console.log(ex);
+        }
       }
     } else if (codeArea) {
       try {
         const _code = UniqueBuildingIdentification.v3.encode(codeArea.latitudeLo, codeArea.longitudeLo, codeArea.latitudeHi, codeArea.longitudeHi, codeArea.centerOfMass.latitudeCenter, codeArea.centerOfMass.longitudeCenter, codeLength);
 
         handleCodeChange(_code);
-      } catch {}
+      } catch (ex) {
+        console.log(ex);
+      }
     }
 
     onCodeLengthChange && onCodeLengthChange(codeLength);
