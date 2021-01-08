@@ -5,19 +5,13 @@ import UniqueBuildingIdentification from 'pnnl-buildingid'
 
 import CodeAreaShape from './CodeAreaShape'
 
+import useCodeArea from '../hooks-custom/useCodeArea'
+
 const CodeShape = ({
   code,
   ...props
 }) => {
-  const codeArea = React.useMemo(() => {
-    try {
-      return UniqueBuildingIdentification.v3.decode(code);
-    } catch {
-      return undefined;
-    }
-  }, [
-    code,
-  ]);
+  const codeArea = useCodeArea(code);
 
   if (codeArea) {
     return (

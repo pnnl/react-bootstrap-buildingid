@@ -21,6 +21,8 @@ import CodeLengthFormControl from './CodeLengthFormControl'
 import CodeMapControl from './CodeMapControl'
 import Icon from './Icon'
 
+import useCodeArea from '../hooks-custom/useCodeArea'
+
 import styles from '../styles.module.css'
 
 const LeftPanel = ({
@@ -145,25 +147,8 @@ const CodeFormGroup = ({
   const modalLockButtonRef = React.useRef(null);
   const modalShowButtonRef = React.useRef(null);
 
-  const codeArea = React.useMemo(() => {
-    try {
-      return UniqueBuildingIdentification.v3.decode(code);
-    } catch {
-      return undefined;
-    }
-  }, [
-    code,
-  ]);
-
-  const lockedCodeArea = React.useMemo(() => {
-    try {
-      return UniqueBuildingIdentification.v3.decode(lockedCode);
-    } catch {
-      return undefined;
-    }
-  }, [
-    lockedCode,
-  ]);
+  const codeArea = useCodeArea(code);
+  const lockedCodeArea = useCodeArea(lockedCode);
 
   const handleCodeChange = (_code) => {
     onCodeChange && onCodeChange(_code);
@@ -212,7 +197,7 @@ const CodeFormGroup = ({
     event.preventDefault();
 
     if (Array.isArray(history)) {
-      if (UniqueBuildingIdentification.v3.isValid(code)) {
+      if (codeArea) {
         if (history.length > 1) {
           onCodeChange && onCodeChange(history[history.length - 2]);
 
@@ -354,9 +339,9 @@ const CodeFormGroup = ({
           ) : null
         }
         {
-          (Array.isArray(history) && (UniqueBuildingIdentification.v3.isValid(code) ? ((history.length > 1) && (code !== history[history.length - 2])) : ((history.length > 0) && (code !== history[history.length - 1])))) ? (
+          (Array.isArray(history) && (codeArea ? ((history.length > 1) && (code !== history[history.length - 2])) : ((history.length > 0) && (code !== history[history.length - 1])))) ? (
             <Form.Text className="text-muted">
-              <span>Restore previous value:</span> <a href="/" onClick={handleRestoreHistoryLinkClick}>{history[history.length - (UniqueBuildingIdentification.v3.isValid(code) ? 2 : 1)]}</a>
+              <span>Restore previous value:</span> <a href="/" onClick={handleRestoreHistoryLinkClick}>{history[history.length - (codeArea ? 2 : 1)]}</a>
             </Form.Text>
           ) : null
         }
@@ -476,9 +461,9 @@ const CodeFormGroup = ({
                   ) : null
                 }
                 {
-                  (Array.isArray(history) && (UniqueBuildingIdentification.v3.isValid(code) ? ((history.length > 1) && (code !== history[history.length - 2])) : ((history.length > 0) && (code !== history[history.length - 1])))) ? (
+                  (Array.isArray(history) && (codeArea ? ((history.length > 1) && (code !== history[history.length - 2])) : ((history.length > 0) && (code !== history[history.length - 1])))) ? (
                     <Form.Text className="text-muted">
-                      <span>Restore previous value:</span> <a href="/" onClick={handleRestoreHistoryLinkClick}>{history[history.length - (UniqueBuildingIdentification.v3.isValid(code) ? 2 : 1)]}</a>
+                      <span>Restore previous value:</span> <a href="/" onClick={handleRestoreHistoryLinkClick}>{history[history.length - (codeArea ? 2 : 1)]}</a>
                     </Form.Text>
                   ) : null
                 }

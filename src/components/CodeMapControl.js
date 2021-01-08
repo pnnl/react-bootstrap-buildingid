@@ -5,20 +5,14 @@ import UniqueBuildingIdentification from 'pnnl-buildingid'
 
 import CodeAreaMapControl from './CodeAreaMapControl'
 
+import useCodeArea from '../hooks-custom/useCodeArea'
+
 const CodeMapControl = ({
   code,
   onCodeChange,
   ...props
 }) => {
-  const codeArea = React.useMemo(() => {
-    try {
-      return UniqueBuildingIdentification.v3.decode(code);
-    } catch {
-      return undefined;
-    }
-  }, [
-    code,
-  ]);
+  const codeArea = useCodeArea(code);
 
   const handleCodeAreaChange = (_codeArea, _code) => {
     onCodeChange && onCodeChange(_code, _codeArea);
